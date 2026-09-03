@@ -63,6 +63,18 @@ def delete_record(recid, tombstone_data):
 
 
 @shared_task(ignore_result=True)
+def delete_record_group(recids: list[str], tombstone_data: dict):
+    """Delete all versions of a record"""
+    for recid in recids:
+        try:
+            current_rdm_records_service.delete_record(
+                system_identity, recid, tombstone_data
+            )
+        except DeletionStatusException as ex:
+            # Record is already deleted; index it again to make sure search is up-to-date.
+            current_rdm_records_service.indexer.index(ex.record)
+
+@shared_task(ignore_result=True)
 def restore_record(recid):
     """Restore a single record."""
     try:
