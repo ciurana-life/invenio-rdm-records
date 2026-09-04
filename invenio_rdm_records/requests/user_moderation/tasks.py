@@ -74,6 +74,7 @@ def delete_record_group(recids: list[str], tombstone_data: dict):
             # Record is already deleted; index it again to make sure search is up-to-date.
             current_rdm_records_service.indexer.index(ex.record)
 
+
 @shared_task(ignore_result=True)
 def restore_record(recid):
     """Restore a single record."""

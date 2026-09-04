@@ -1,8 +1,10 @@
-from invenio_rdm_records.requests.user_moderation.utils import get_user_records_grouped
 from invenio_rdm_records.proxies import current_rdm_records_service as records_service
+from invenio_rdm_records.requests.user_moderation.utils import get_user_records_grouped
 
 
-def test_get_user_records_grouped(running_app, verified_user, search_clear, minimal_record):
+def test_get_user_records_grouped(
+    running_app, verified_user, search_clear, minimal_record
+):
     """Should return ordered lists by versions of records of a user."""
     identity = verified_user.identity
 
