@@ -47,7 +47,7 @@ def on_block(user_id, uow=None, **kwargs):
 
     # Soft-delete all the published records of that user
     for record_and_versions in get_user_records_grouped(user_id):
-        uow.register(TaskOp(delete_record_group, recid=record_and_versions, tombstone_data=tombstone_data))
+        uow.register(TaskOp(delete_record_group, recids=record_and_versions, tombstone_data=tombstone_data))
 
     # Send cleanup task to make sure all records are deleted
     uow.register(
